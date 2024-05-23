@@ -393,7 +393,7 @@ function startComputer() {
 
     function rename() {
         document.getElementById('oneNameAsking').style.display = "flex";
-        document.getElementById('btn-for-rename-computer').innerText = "Save Name"
+        document.getElementById('btn-container-for-computer').innerText = "Save Name"
         document.getElementById('btn-container-for-computer').addEventListener('click', function () {
             startGame(); // Reuse the startGame function to save and update names
         });
