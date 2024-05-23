@@ -89,7 +89,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let turn0Buffer, turnXBuffer, gameoverBuffer;
 
 // Preload the audio files
-function preloadAudio(url) {
+async function preloadAudio(url) {
     return fetch(url)
         .then(response => response.arrayBuffer())
         .then(data => audioContext.decodeAudioData(data));
