@@ -182,22 +182,16 @@ body {
 
 .resetpro {
     margin: 1vh;
-    padding: 10px 20px;
+    padding: 5px 15px;
     background: linear-gradient(45deg, #6e48aa, #9d50bb);
-    /* Gradient background */
     border: 1px solid #9d50bb;
-    /* Slight border */
     border-radius: 5px;
     color: white;
-    /* cursor: pointer; */
     font-family: "Baloo Bhaina 2", sans-serif;
-    /* Fallback font */
-    font-size: 15px;
+    font-size: 21px;
     font-weight: bold;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    /* Box shadow for depth */
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-    /* Smooth transitions */
 }
 
 .resetpro:hover,
