@@ -4,6 +4,23 @@ document.getElementById('oneNameAsking').style.display = 'none';
 document.getElementById('nav').style.display = 'none';
 
 
+const volumeIcon = document.getElementById('volume');
+let isMuted = false;
+
+volumeIcon.addEventListener('click', function () {
+    if (isMuted) {
+        volumeIcon.src = 'volume-up.png';
+        volumeIcon.classList.remove('clicked');
+        isMuted = false;
+    } else {
+        volumeIcon.src = 'mute.png';
+        volumeIcon.classList.add('clicked');
+        isMuted = true;
+    }
+});
+
+
+
 // Initialize AudioContext
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let turn0Buffer, turnXBuffer, gameoverBuffer;
@@ -257,7 +274,7 @@ function startDoubleGame() {
                 }
                 document.querySelector(".info").innerText = `${obj[boxTexts[pattern[0]].innerText]} Won`;
                 isGameOver = true;
-                play_gameover();
+                if (!isMuted) { play_gameover(); }
 
                 setTimeout(() => {
                     clearInterval(blinkInterval);
@@ -292,9 +309,9 @@ function startDoubleGame() {
                 element.classList.toggle("hover");
                 boxText.innerText = turn;
                 saveGameState();
-                if (turn == "X")
+                if (turn == "X" && (!isMuted))
                     play_turn_x();
-                else
+                else if (!isMuted)
                     play_turn_0();
                 turn = changeTurn();
                 moveCount++;
@@ -456,7 +473,7 @@ function startComputer() {
             localStorage.setItem("moveWithCoputer", `${moveWithCoputer}`);
         }
         saveGameState();
-        play_gameover();
+        if (!isMuted) { play_gameover(); }
         isGameOver = false;
         imgBox[0].style.display = "none";
         imgBox[1].style.display = "none";
@@ -484,7 +501,7 @@ function startComputer() {
                 });
                 resetGame();
             }, 800);
-            play_gameover();
+            if (!isMuted) { play_gameover(); }
             return true;
         }
         else {
@@ -537,7 +554,8 @@ function startComputer() {
                 document.getElementById("info").style.display = "block";
                 document.getElementById("info").innerHTML = `${obj[boxTexts[pattern[0]].innerHTML]} Won`;
                 isGameOver = true;
-                play_gameover();
+                if (!isMuted) { play_gameover(); }
+
 
                 setTimeout(() => {
                     clearInterval(blinkInterval);
@@ -572,14 +590,14 @@ function startComputer() {
             if (boxText.innerText === "" && !isGameOver) {
                 element.classList.toggle("hover");
                 boxText.innerText = "X";
-                play_turn_x();
+                if (!isMuted) { play_turn_x(); }
                 saveGameState();
                 moveWithCoputer++;
                 localStorage.setItem("moveWithCoputer", `${moveWithCoputer}`);
                 checkWin();
                 if (!isGameOver) {
                     if (!checkDraw()) {
-                        setTimeout(()=>computerMove(), 300);
+                        setTimeout(() => computerMove(), 300);
                     }
                 }
             }
