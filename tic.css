@@ -88,12 +88,13 @@ body {
 .nav .title {
     flex-grow: 1;
     text-align: center;
+    font-family: "Poetsen One", sans-serif;
+    font-size: 35px;
 }
 
 #volume {
     filter: invert(1);
     height: 30px;
-    cursor: pointer;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
