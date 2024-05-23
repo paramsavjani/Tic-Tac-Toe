@@ -3,10 +3,67 @@ document.getElementById('gameContainer').style.display = 'none';
 document.getElementById('oneNameAsking').style.display = 'none';
 document.getElementById('nav').style.display = 'none';
 
+let executeFuncLocal = false;
+let executeFuncComp = false;
 
+document.getElementById("one").addEventListener("click", () => {
+    executeFuncComp = true;
+    document.getElementById('mode').innerHTML = "Play with Local"
+    startComputer();
+})
+document.getElementById("two").addEventListener("click", () => {
+    executeFuncLocal = true;
+    document.getElementById('mode').innerHTML = "Play with Computer"
+    startDoubleGame();
+
+})
 document.getElementById('mode').addEventListener("click", () => {
-    document.getElementById('modeselect').style.display = 'flex';
+    if (executeFuncComp) {
 
+        executeFuncComp = false;
+        executeFuncLocal = true;
+        document.getElementById("info").style.display = "block";
+        const boxes = document.getElementsByClassName("box");
+        let temp = document.getElementById('btn-container');
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("reset");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("clear-score");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("rename");
+        temp.replaceWith(temp.cloneNode(true));
+
+        Array.from(boxes).forEach((element) => {
+            element.replaceWith(element.cloneNode(true));
+            element.innerHTML = "";
+        })
+        startDoubleGame();
+        document.getElementById('mode').innerHTML = "Play with Computer"
+
+    }
+    else {
+
+        executeFuncLocal = false;
+        executeFuncComp = true;
+        const boxes = document.getElementsByClassName("box");
+        let temp = document.getElementById('btn-container');
+        temp.replaceWith(temp.cloneNode(true));
+
+        temp = document.getElementById("reset");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("clear-score");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("rename");
+        temp.replaceWith(temp.cloneNode(true));
+
+        Array.from(boxes).forEach((element) => {
+            element.replaceWith(element.cloneNode(true));
+            element.innerHTML = "";
+        })
+        startComputer();
+        document.getElementById('mode').innerHTML = "Play with Local"
+
+    }
 })
 
 
@@ -363,6 +420,8 @@ function startComputer() {
     let playerName = null
 
     updateNames();
+
+
     document.getElementById('info').style.display = 'none';
     document.getElementById('modeselect').style.display = 'none';
     document.getElementById('btn-container-for-computer').addEventListener("click", startGame);
@@ -457,7 +516,7 @@ function startComputer() {
     let x = Math.random();
     let turn = x < 0.5 ? "X" : "O";
 
-    const resetGame = () => {
+    function resetGame() {
         localStorage.removeItem("gameStatecompter");
         document.getElementById("info").style.display = "none";
         moveWithCoputer = 0;
@@ -485,7 +544,7 @@ function startComputer() {
         imgBox[1].style.display = "none";
     };
 
-    const checkDraw = () => {
+    function checkDraw() {
         if (moveWithCoputer === 9) {
             const boxTexts = document.getElementsByClassName("boxtext");
             document.getElementById("info").style.display = "block";
