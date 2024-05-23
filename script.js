@@ -4,6 +4,12 @@ document.getElementById('oneNameAsking').style.display = 'none';
 document.getElementById('nav').style.display = 'none';
 
 
+document.getElementById('mode').addEventListener("click", () => {
+    document.getElementById('modeselect').style.display = 'flex';
+
+})
+
+
 const volumeIcon = document.getElementById('volume');
 let isMuted = false;
 
@@ -603,14 +609,6 @@ function startComputer() {
             }
         });
     });
-
-
-
-
-
-
-
-
 
 
     const PLAYER = 'X';

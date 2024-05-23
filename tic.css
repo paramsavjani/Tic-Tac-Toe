@@ -189,7 +189,7 @@ body {
     /* Slight border */
     border-radius: 5px;
     color: white;
-    cursor: pointer;
+    /* cursor: pointer; */
     font-family: "Baloo Bhaina 2", sans-serif;
     /* Fallback font */
     font-size: 15px;
