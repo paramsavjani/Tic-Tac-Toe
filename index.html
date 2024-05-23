@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link
+            rel="icon"
+            href="icon.png"
+            <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+        <meta name="description" content="Tic Tac Toe Game" />
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="tic.css" />
+        <link rel="stylesheet" href="pop.css" />
+    </head>
+    <body>
+        <div class="popup-container" id="modeselect">
+            <div class="popup-content">
+                <h2>Select Mode</h2>
+                <div class="input-container">
+                    <button onclick="startComputer()" id="one">
+                        One Player
+                    </button>
+                    <button onclick="startDoubleGame()" id="two">
+                        Two Player
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-container" id="popupContainer">
+            <div class="popup-content">
+                <h2>Enter Player Names</h2>
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="player1Name"
+                        placeholder="Player 1 Name"
+                    />
+                    <input
+                        type="text"
+                        id="player2Name"
+                        placeholder="Player 2 Name"
+                    />
+                </div>
+                <div class="btn-container" id="btn-container">
+                    <button>Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-container" id="oneNameAsking">
+            <div class="popup-content">
+                <h2>Enter Player Name</h2>
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="playerName"
+                        placeholder="Player Name"
+                    />
+                </div>
+                <div class="btn-container" id="btn-container-for-computer">
+                    <button id="btn-for-rename-computer">Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav" id="nav">Tic Tac Toe</nav>
+        <div class="gameContainer" id="gameContainer">
+            <div class="container">
+                <div class="box bt-0 bl-0"><span class="boxtext"></span></div>
+                <div class="box bt-0"><span class="boxtext"></span></div>
+                <div class="box bt-0 br-0"><span class="boxtext"></span></div>
+                <div class="box bl-0"><span class="boxtext"></span></div>
+                <div class="box"><span class="boxtext"></span></div>
+                <div class="box br-0"><span class="boxtext"></span></div>
+                <div class="box bl-0 bb-0"><span class="boxtext"></span></div>
+                <div class="box bb-0"><span class="boxtext"></span></div>
+                <div class="box bb-0 br-0"><span class="boxtext"></span></div>
+            </div>
+            <div class="param">
+                <div class="imgbox">
+                    <img src="excited.gif" alt="Excited Gif" />
+                </div>
+                <div class="gameInfo">
+                    <div class="info" id="info">Turn for X</div>
+                    <div class="scoreboard">
+                        <div class="score ply1">
+                            <p>PLAYER (X)</p>
+                            <p>0</p>
+                        </div>
+                        <div class="score tie">
+                            <p>TIE</p>
+                            <p>0</p>
+                        </div>
+                        <div class="score ply2">
+                            <p>PLAYER (O)</p>
+                            <p>0</p>
+                        </div>
+                    </div>
+                    <div class="btn">
+                        <button class="resetpro" id="reset">Reset</button>
+                        <button class="resetpro" id="clear-score">
+                            Clear Score
+                        </button>
+                        <button class="resetpro" id="rename">
+                            Rename Player
+                        </button>
+                    </div>
+                </div>
+                <div class="imgbox">
+                    <img src="excited.gif" alt="Excited Gif" />
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

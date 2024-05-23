@@ -1,0 +1,268 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&family=Roboto&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poetsen+One&display=swap');
+
+
+@media screen and (max-width: 950px) {
+    .container {
+        grid-template-rows: repeat(3, 20vw);
+        grid-template-columns: repeat(3, 20vw);
+    }
+
+    .box {
+        font-size: 15vw;
+    }
+
+    .gameInfo h1 {
+        font-size: 1.5rem;
+    }
+
+    .param {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .imgbox {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .imgbox img {
+        width: 80px;
+    }
+
+    .box:active,
+    .box:focus {
+        background-color: #333;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* animation: fadeIn 1s ease-in-out; */
+}
+
+.nav {
+    background-color: #1f1f1f;
+    color: white;
+    font-family: "Poetsen One", sans-serif;
+    height: 65px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.blinking {
+    display: none;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: repeat(3, 10vw);
+    grid-template-columns: repeat(3, 10vw);
+    gap: 5px;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.box {
+    background-color: #1f1f1f;
+    border: 2px solid #333;
+    font-size: 8vw;
+    /*cursor: pointer;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.hover {
+    background-color: #333;
+    transform: scale(1.1);
+}
+
+.boxtext {
+    color: #fff;
+    opacity: 0;
+    animation: appear 0.9s forwards;
+}
+
+@keyframes appear {
+    to {
+        opacity: 1;
+    }
+}
+
+.info {
+    font-size: 22px;
+    margin-top: 20px;
+    font-family: "Bungee Spice", sans-serif;
+    animation: fadeIn 0.07s ease-in-out;
+}
+
+.imgbox {
+    display: none;
+    align-content: center;
+}
+
+.imgbox img {
+    width: 110px;
+    margin-top: 20px;
+}
+
+.gameInfo {
+    text-align: center;
+    font-family: "Baloo Bhaina 2", cursive;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.gameInfo h1 {
+    font-size: 2.5rem;
+}
+
+.resetpro {
+    margin: 1vh;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #6e48aa, #9d50bb);
+    /* Gradient background */
+    border: 1px solid #9d50bb;
+    /* Slight border */
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: "Baloo Bhaina 2", sans-serif;
+    /* Fallback font */
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    /* Box shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    /* Smooth transitions */
+}
+
+.resetpro:hover,
+.resetpro:focus {
+    transform: translateY(-3px);
+    /* Slight lift effect */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    /* Enhanced shadow on hover */
+}
+
+.resetpro:active {
+    transform: translateY(-1px);
+    /* Subtle click effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Smaller shadow on click */
+}
+
+/* Keyframes for additional animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #9d50bb, #6e48aa);
+        /* Color shift */
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .container {
+        grid-template-rows: repeat(3, 20vw);
+        grid-template-columns: repeat(3, 20vw);
+    }
+
+    .box {
+        font-size: 15vw;
+    }
+
+    .gameInfo h1 {
+        font-size: 1.5rem;
+    }
+}
+
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 13px;
+    /* Adjust as needed */
+    gap: 50px;
+}
+
+.score {
+    text-align: center;
+}
+
+.score p {
+    font-size: 3vh;
+    margin: 0;
+    font-family: "Poetsen One", sans-serif;
+    /* Removes default paragraph margin */
+}
+
+.score span {
+    font-size: 3vh;
+    display: block;
+    /* Makes the score appear on a new line */
+}
+
+.player-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: large;
+    /* Adjust size as needed */
+}
+
+.param {
+    display: flex;
+    gap: 50px;
+}
