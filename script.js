@@ -579,7 +579,7 @@ function startComputer() {
                 checkWin();
                 if (!isGameOver) {
                     if (!checkDraw()) {
-                        computerMove();
+                        setTimeout(()=>computerMove(), 300);
                     }
                 }
             }
@@ -684,17 +684,22 @@ function startComputer() {
             }
         });
         let temp = findBestMove(board);
-
         Array.from(boxes).forEach((element, index) => {
             const boxText = element.querySelector(".boxtext");
-            if (temp == index) { boxText.innerHTML = "O"; }
+            if (temp == index) {
+                element.classList.add("hover")
+                boxText.innerHTML = "O";
+                setTimeout(() => {
+                    element.classList.remove("hover");
+                    localStorage.setItem("moveWithCoputer", ++moveWithCoputer);
+                    checkWin();
+                    if (!isGameOver) {
+                        checkDraw();
+                    }
+                    saveGameState();
+                }, 200);
+            }
         });
-        localStorage.setItem("moveWithCoputer", ++moveWithCoputer);
-        checkWin();
-        if (!isGameOver) {
-            checkDraw();
-        }
-        saveGameState();
     }
 
 
