@@ -1,9 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2&family=Roboto&display=swap");
 
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
+
 .popup-container {
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
@@ -22,12 +25,34 @@
     padding: 20px;
     border-radius: 10px;
     max-width: 400px;
-    width: 100%;
+    width: 90%;
     text-align: center;
+    animation: popupAnimation 0.5s ease-out;
+}
+
+@keyframes popupAnimation {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#twobutton {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom:
+        20px;
 }
 
 .popup-content h2 {
     margin-bottom: 20px;
+    font-family: 'Baloo Bhaina 2', cursive;
 }
 
 .input-container {
@@ -50,28 +75,50 @@
     justify-content: center;
 }
 
-.btn-container button,#one,
+.btn-container button,
+#one,
 #two {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #333;
+    background-color: #6a0dad;
+    /* Purple color */
     color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    margin: 10px;
+    justify-self: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-self: center;
 }
 
-.btn-container button:hover,#one,
-#two {
-    background-color: #444;
+.btn-container button:hover,
+#one:hover,
+#two:hover {
+    background-color: #7a1fb3;
+    /* Slightly darker purple */
+    transform: scale(1 .05);
 }
 
+@media (max-width: 600px) {
+    .popup-content {
+        max-width: 90%;
+        padding: 15px;
+    }
 
+    .input-container input {
+        font-size: 14px;
+        padding: 8px;
+    }
 
-
-
-
-
-
-
+    .btn-container button,
+    #one,
+    #two {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
