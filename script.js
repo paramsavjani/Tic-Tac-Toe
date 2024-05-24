@@ -1,7 +1,194 @@
+document.getElementById("one").addEventListener("click", function () {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }
+});
+document.getElementById("two").addEventListener("click", function () {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }
+});
+
 document.getElementById('popupContainer').style.display = 'none';
 document.getElementById('gameContainer').style.display = 'none';
 document.getElementById('oneNameAsking').style.display = 'none';
 document.getElementById('nav').style.display = 'none';
+document.getElementById('modeselect').style.display = 'none';
+
+
+const sizeInput = document.getElementById("size");
+let boardSize = 3;
+
+
+function startGame() {
+    boardSize = parseInt(sizeInput.value);
+    createBoard(boardSize);
+    document.getElementById('modeselect').style.display = 'flex';
+    document.getElementById('gridselect').style.display = 'none';
+}
+
+function createBoard(size) {
+    const container = document.getElementById("gridContainer");
+    container.innerHTML = null;
+
+    // Determine the viewport width
+    const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+    // Set container size based on viewport width
+    const containerSize = viewportWidth < 600 ? 90 : 35;
+
+    const gapSize = 15 / size;
+    const totalGap = (size - 1) * gapSize;
+    const boxSize =
+        (containerSize - (totalGap / viewportWidth) * 100) /
+        size; // Calculate box size in vw
+
+    container.style.gap = `${gapSize}px`;
+    container.style.gridTemplateColumns = `repeat(${size}, ${boxSize}vw)`;
+    container.style.gridTemplateRows = `repeat(${size}, ${boxSize}vw)`;
+
+    for (let i = 0; i < size * size; i++) {
+        const box = document.createElement("div");
+        box.classList.add("box");
+
+        const boxtext = document.createElement("div");
+        boxtext.classList.add("boxtext");
+        boxtext.style.fontSize = `${300 / size}px`; // Changed boardSize to size
+
+        box.appendChild(boxtext);
+        container.appendChild(box);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to generate win patterns dynamically based on board size and win condition
+function generateWinPatterns(boardSize, winCondition) {
+    const winPatterns = [];
+
+    // Rows and columns
+    for (let i = 0; i < boardSize; i++) {
+        for (let j = 0; j <= boardSize - winCondition; j++) {
+            const rowPattern = [];
+            const colPattern = [];
+            for (let k = 0; k < winCondition; k++) {
+                rowPattern.push(i * boardSize + (j + k));
+                colPattern.push((j + k) * boardSize + i);
+            }
+            winPatterns.push(rowPattern);
+            winPatterns.push(colPattern);
+        }
+    }
+
+    // Diagonals
+    for (let i = 0; i <= boardSize - winCondition; i++) {
+        for (let j = 0; j <= boardSize - winCondition; j++) {
+            const diagPattern1 = [];
+            const diagPattern2 = [];
+            for (let k = 0; k < winCondition; k++) {
+                diagPattern1.push((i + k) * boardSize + (j + k));
+                diagPattern2.push((i + k) * boardSize + (j + winCondition - 1 - k));
+            }
+            winPatterns.push(diagPattern1);
+            winPatterns.push(diagPattern2);
+        }
+    }
+
+    return winPatterns;
+}
+
 
 let executeFuncLocal = false;
 let executeFuncComp = false;
@@ -127,6 +314,9 @@ function play_gameover() {
     }
 }
 
+
+
+
 function startDoubleGame() {
 
     updateNames();
@@ -135,8 +325,8 @@ function startDoubleGame() {
     document.getElementById('btn-container').addEventListener("click", startGame);
 
     function updateNames() {
-        const player1Name = localStorage.getItem('player1Name');
-        const player2Name = localStorage.getItem('player2Name');
+        const player1Name = localStorage.getItem(`player1Name`);
+        const player2Name = localStorage.getItem(`player2Name`);
 
         if (player1Name && player2Name) {
             document.getElementById('player1Name').value = player1Name;
@@ -187,16 +377,15 @@ function startDoubleGame() {
             document.querySelector(".info").innerText = `Start from ${obj[turn]}`;
     }
 
-    let leftname = localStorage.getItem('player1Name');
-    let rightname = localStorage.getItem('player2Name');
+    let leftname = localStorage.getItem(`player1Name`);
+    let rightname = localStorage.getItem(`player2Name`);
 
     const obj = {
         "X": leftname,
         "O": rightname,
     }
 
-    let gameover = new Audio("{{url_for('static',filename='gameover.mp3')}}");
-    let turn = localStorage.getItem("turn") ? localStorage.getItem("turn") : null;
+    let turn = localStorage.getItem(`turn${boardSize}`) ? localStorage.getItem(`turn${boardSize}`) : null;
 
     if (turn == null) {
         let x = Math.random();
@@ -204,10 +393,10 @@ function startDoubleGame() {
     }
 
     let isGameOver = false;
-    let moveCount = localStorage.getItem("move") ? parseInt(localStorage.getItem("move")) : 0;
-    let player1Score = localStorage.getItem("ply1") ? parseInt(localStorage.getItem("ply1")) : 0;
-    let player2Score = localStorage.getItem("ply2") ? parseInt(localStorage.getItem("ply2")) : 0;
-    let tieScore = localStorage.getItem("tie") ? parseInt(localStorage.getItem("tie")) : 0;
+    let moveCount = localStorage.getItem(`move${boardSize}`) ? parseInt(localStorage.getItem(`move${boardSize}`)) : 0;
+    let player1Score = localStorage.getItem(`ply1`) ? parseInt(localStorage.getItem(`ply1`)) : 0;
+    let player2Score = localStorage.getItem(`ply2`) ? parseInt(localStorage.getItem(`ply2`)) : 0;
+    let tieScore = localStorage.getItem(`tie`) ? parseInt(localStorage.getItem(`tie`)) : 0;
 
     const imgBox = document.querySelectorAll(".imgbox");
 
@@ -218,7 +407,7 @@ function startDoubleGame() {
 
 
     function loadGameState() {
-        const savedState = JSON.parse(localStorage.getItem("gameState"));
+        const savedState = JSON.parse(localStorage.getItem(`gameState${boardSize}`));
         if (savedState) {
             const boxTexts = document.querySelectorAll(".boxtext");
             boxTexts.forEach((box, index) => {
@@ -231,7 +420,7 @@ function startDoubleGame() {
     function saveGameState() {
         const boxTexts = document.querySelectorAll(".boxtext");
         const gameState = Array.from(boxTexts).map(box => box.innerText);
-        localStorage.setItem("gameState", JSON.stringify(gameState));
+        localStorage.setItem(`gameState${boardSize}`, JSON.stringify(gameState));
     }
 
     function updatePlayerScore(newScore) {
@@ -254,16 +443,16 @@ function startDoubleGame() {
     const changeTurn = () => turn === "X" ? "O" : "X";
 
     const resetGame = () => {
-        localStorage.removeItem("gameState");
+        localStorage.removeItem(`gameState${boardSize}`);
         moveCount = 0;
-        localStorage.setItem("move", '0');
+        localStorage.setItem(`move${boardSize}`, '0');
         const boxTexts = document.querySelectorAll(".boxtext");
         boxTexts.forEach((element) => {
             element.innerHTML = "";
         });
         let x = Math.random();
         turn = x < 0.5 ? "X" : "O";
-        localStorage.setItem("turn", `${turn}`);
+        localStorage.setItem(`turn${boardSize}`, `${turn}`);
 
         isGameOver = false;
         imgBox[0].style.display = "none";
@@ -272,7 +461,7 @@ function startDoubleGame() {
     };
 
     const checkDraw = () => {
-        if (moveCount === 9) {
+        if (moveCount === (boardSize * boardSize)) {
             const boxTexts = document.getElementsByClassName("boxtext");
             document.getElementById("info").innerText = "Match tied";
 
@@ -280,7 +469,7 @@ function startDoubleGame() {
                 Array.from(boxTexts).forEach(e => {
                     e.classList.toggle("blinking");
                 });
-            }, 150);
+            }, 200);
 
             updateTieScore(++tieScore);
             localStorage.setItem("tie", `${tieScore}`);
@@ -291,43 +480,37 @@ function startDoubleGame() {
                     e.classList.remove("blinking");
                 });
                 resetGame();
-            }, 800);
+            }, 1200);
 
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     };
 
 
-
-    const checkWin = () => {
+    const checkWin = (boardSize) => {
         const boxTexts = document.getElementsByClassName("boxtext");
-        const winPatterns = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6]
-        ];
+        const winCondition = boardSize === 3 ? 3 : 4;
+        const winPatterns = generateWinPatterns(boardSize, winCondition);
 
         winPatterns.forEach((pattern) => {
-            if (
-                boxTexts[pattern[0]].innerText === boxTexts[pattern[1]].innerText &&
-                boxTexts[pattern[2]].innerText === boxTexts[pattern[1]].innerText &&
-                boxTexts[pattern[0]].innerText !== ""
-            ) {
+            let isWin = true;
+            for (let i = 1; i < pattern.length; i++) {
+                if (boxTexts[pattern[i]].innerText !== boxTexts[pattern[0]].innerText || boxTexts[pattern[0]].innerText === "") {
+                    isWin = false;
+                    break;
+                }
+            }
+            if (isWin) {
                 let blinkInterval = setInterval(() => {
-                    boxTexts[pattern[0]].classList.toggle("blinking");
-                    boxTexts[pattern[1]].classList.toggle("blinking");
-                    boxTexts[pattern[2]].classList.toggle("blinking");
+                    pattern.forEach((index) => {
+                        boxTexts[index].classList.toggle("blinking");
+                    });
                 }, 200);
 
-                if (boxTexts[pattern[0]].innerText === "X") {
+                const winnerSymbol = boxTexts[pattern[0]].innerText;
+                if (winnerSymbol === "X") {
                     imgBox[0].style.display = "block";
                     updatePlayerScore(++player1Score);
                     localStorage.setItem("ply1", `${player1Score}`);
@@ -336,21 +519,22 @@ function startDoubleGame() {
                     localStorage.setItem("ply2", `${player2Score}`);
                     imgBox[1].style.display = "block";
                 }
-                document.querySelector(".info").innerText = `${obj[boxTexts[pattern[0]].innerText]} Won`;
+                document.querySelector(".info").innerText = `${obj[winnerSymbol]} Won`;
                 isGameOver = true;
-                if (!isMuted) { play_gameover(); }
+                if (!isMuted) {
+                    play_gameover();
+                }
 
                 setTimeout(() => {
                     clearInterval(blinkInterval);
-                    boxTexts[pattern[0]].classList.remove("blinking");
-                    boxTexts[pattern[1]].classList.remove("blinking");
-                    boxTexts[pattern[2]].classList.remove("blinking");
+                    pattern.forEach((index) => {
+                        boxTexts[index].classList.remove("blinking");
+                    });
                     resetGame();
                 }, 1800);
             }
         });
     };
-
 
 
     const boxes = document.getElementsByClassName("box");
@@ -379,12 +563,12 @@ function startDoubleGame() {
                     play_turn_0();
                 turn = changeTurn();
                 moveCount++;
-                localStorage.setItem("move", `${moveCount}`);
-                checkWin();
+                localStorage.setItem(`move${boardSize}`, '0');
+                checkWin(boardSize);
                 if (!isGameOver) {
                     if (!checkDraw()) {
                         document.querySelector(".info").innerText = `Turn for ${obj[turn]}`;
-                        localStorage.setItem("turn", `${turn}`);
+                        localStorage.setItem(`turn${boardSize}`, `${turn}`);
                     }
                 }
             }
@@ -414,11 +598,9 @@ function startDoubleGame() {
 
 
 
-
-
 function startComputer() {
 
-    let playerName = null
+    let playerName = null;
 
     updateNames();
 
@@ -429,7 +611,7 @@ function startComputer() {
     document.querySelector('.score.ply2 p:nth-child(1)').innerText = `Computer (O)`;
 
     function updateNames() {
-        playerName = localStorage.getItem('playerName');
+        playerName = localStorage.getItem(`playerName`);
 
         if (playerName) {
             document.getElementById('playerName').value = playerName;
@@ -470,18 +652,18 @@ function startComputer() {
     }
 
     let gameover = new Audio("{{url_for('static',filename='gameover.mp3')}}");
-    let moveWithCoputer = localStorage.getItem("moveWithCoputer") ? parseInt(localStorage.getItem("moveWithCoputer")) : 0;
+    let moveWithCoputer = localStorage.getItem(`moveWithCoputer${boardSize}`) ? parseInt(localStorage.getItem(`moveWithCoputer${boardSize}`)) : 0;
 
 
 
     let isGameOver = false;
-    let playerScore = localStorage.getItem("ply") ? parseInt(localStorage.getItem("ply")) : 0;
-    let computerScore = localStorage.getItem("computerScore") ? parseInt(localStorage.getItem("computerScore")) : 0;
-    let tieScore = localStorage.getItem("tiecomputer") ? parseInt(localStorage.getItem("tiecomputer")) : 0;
+    let playerScore = localStorage.getItem(`ply`) ? parseInt(localStorage.getItem(`ply`)) : 0;
+    let computerScore = localStorage.getItem(`computerScore`) ? parseInt(localStorage.getItem(`computerScore`)) : 0;
+    let tieScore = localStorage.getItem(`tiecomputer`) ? parseInt(localStorage.getItem(`tiecomputer`)) : 0;
     const imgBox = document.querySelectorAll(".imgbox");
 
     function loadGameState() {
-        const savedState = JSON.parse(localStorage.getItem("gameStatecompter"));
+        const savedState = JSON.parse(localStorage.getItem(`gameStatecompter${boardSize}`));
         if (savedState) {
             const boxTexts = document.querySelectorAll(".boxtext");
             boxTexts.forEach((box, index) => {
@@ -495,7 +677,7 @@ function startComputer() {
     function saveGameState() {
         const boxTexts = document.querySelectorAll(".boxtext");
         const gameState = Array.from(boxTexts).map(box => box.innerText);
-        localStorage.setItem("gameStatecompter", JSON.stringify(gameState));
+        localStorage.setItem(`gameStatecompter${boardSize}`, JSON.stringify(gameState));
     }
 
 
@@ -514,14 +696,12 @@ function startComputer() {
     updatePlayerScore(playerScore);
     updatePlayer2Score(computerScore);
     updateTieScore(tieScore);
-    let x = Math.random();
-    let turn = x < 0.5 ? "X" : "O";
 
     function resetGame() {
-        localStorage.removeItem("gameStatecompter");
+        localStorage.removeItem(`gameStatecompter${boardSize}`);
         document.getElementById("info").style.display = "none";
         moveWithCoputer = 0;
-        localStorage.removeItem("moveWithCoputer");
+        localStorage.removeItem(`moveWithCoputer${boardSize}`);
         const boxTexts = document.querySelectorAll(".boxtext");
         boxTexts.forEach((element) => {
             element.innerHTML = "";
@@ -529,24 +709,26 @@ function startComputer() {
         let x = Math.random();
         let turn = x < 0.6 ? "X" : "O";
         if (turn == "O") {
-            let y = Math.floor(Math.random() * 9);
+            let y = Math.floor(Math.random() * boardSize * boardSize);
             boxTexts.forEach((element, ind) => {
                 if (y == ind) {
                     element.innerHTML = "O"
                 }
             });
             moveWithCoputer++;
-            localStorage.setItem("moveWithCoputer", `${moveWithCoputer}`);
+            localStorage.setItem(`moveWithCoputer${boardSize}`, `${moveWithCoputer}`);
         }
         saveGameState();
-        if (!isMuted) { play_gameover(); }
+        if (!isMuted) {
+            play_gameover();
+        }
         isGameOver = false;
         imgBox[0].style.display = "none";
         imgBox[1].style.display = "none";
     };
 
     function checkDraw() {
-        if (moveWithCoputer === 9) {
+        if (moveWithCoputer === (boardSize * boardSize)) {
             const boxTexts = document.getElementsByClassName("boxtext");
             document.getElementById("info").style.display = "block";
             document.getElementById("info").innerText = "Match tied";
@@ -567,14 +749,14 @@ function startComputer() {
                 });
                 resetGame();
             }, 800);
-            if (!isMuted) { play_gameover(); }
+            if (!isMuted) {
+                play_gameover();
+            }
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     };
-
 
     let obj = {
         "X": playerName,
@@ -582,58 +764,232 @@ function startComputer() {
     }
 
 
-    const checkWin = () => {
+
+
+    function generateWinPatterns(boardSize, winCondition) {
+        let winPatterns = [];
+
+        // Rows
+        for (let i = 0; i < boardSize; i++) {
+            for (let j = 0; j <= boardSize - winCondition; j++) {
+                let pattern = [];
+                for (let k = 0; k < winCondition; k++) {
+                    pattern.push(i * boardSize + j + k);
+                }
+                winPatterns.push(pattern);
+            }
+        }
+
+        // Columns
+        for (let i = 0; i < boardSize; i++) {
+            for (let j = 0; j <= boardSize - winCondition; j++) {
+                let pattern = [];
+                for (let k = 0; k < winCondition; k++) {
+                    pattern.push((j + k) * boardSize + i);
+                }
+                winPatterns.push(pattern);
+            }
+        }
+
+        // Diagonals
+        for (let i = 0; i <= boardSize - winCondition; i++) {
+            for (let j = 0; j <= boardSize - winCondition; j++) {
+                let pattern = [];
+                for (let k = 0; k < winCondition; k++) {
+                    pattern.push((i + k) * boardSize + (j + k));
+                }
+                winPatterns.push(pattern);
+            }
+        }
+
+        // Anti-diagonals
+        for (let i = 0; i <= boardSize - winCondition; i++) {
+            for (let j = winCondition - 1; j < boardSize; j++) {
+                let pattern = [];
+                for (let k = 0; k < winCondition; k++) {
+                    pattern.push((i + k) * boardSize + (j - k));
+                }
+                winPatterns.push(pattern);
+            }
+        }
+
+        return winPatterns;
+    }
+
+
+
+    const PLAYER = 'X';
+    const COMPUTER = 'O';
+
+
+
+    // Function to check if a player has won
+    function checkWinner(board, player, winPatterns) {
+        for (let combo of winPatterns) {
+            if (combo.every(index => board[index] === player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Function to check if the board is full
+    function isBoardFull(board) {
+        return board.every(cell => cell === PLAYER || cell === COMPUTER);
+    }
+
+    function minimax(board, depth, alpha, beta, isMaximizing, winPatterns) {
+        if (checkWinner(board, COMPUTER, winPatterns))
+            return 10 - depth;
+        if (checkWinner(board, PLAYER, winPatterns)) return depth - 10;
+        if (isBoardFull(board)) return 0;
+
+        if (depth > 6) return 0; // Prevent infinite recursion
+
+        if (isMaximizing) {
+            let maxEval = -Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === null) {
+                    board[i] = COMPUTER;
+                    let eval = minimax(
+                        board,
+                        depth + 1,
+                        alpha,
+                        beta,
+                        false,
+                        winPatterns
+                    );
+                    board[i] = null;
+                    maxEval = Math.max(maxEval, eval);
+                    alpha = Math.max(alpha, eval);
+                    if (beta <= alpha) break; // Beta cut-off
+                }
+            }
+            return maxEval;
+        } else {
+            let minEval = Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === null) {
+                    board[i] = PLAYER;
+                    let eval = minimax(
+                        board,
+                        depth + 1,
+                        alpha,
+                        beta,
+                        true,
+                        winPatterns
+                    );
+                    board[i] = null;
+                    minEval = Math.min(minEval, eval);
+                    beta = Math.min(beta, eval);
+                    if (beta <= alpha) break; // Alpha cut-off
+                }
+            }
+            return minEval;
+        }
+    }
+
+    // Function to find the best move for the computer
+    function findBestMove(board, winPatterns) {
+        let bestMove = -1;
+        let bestValue = -Infinity;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === null) {
+                board[i] = COMPUTER;
+                let moveValue = minimax(board, 3, -Infinity, Infinity, false, winPatterns);
+                board[i] = null;
+                if (moveValue > bestValue) {
+                    bestValue = moveValue;
+                    bestMove = i;
+                }
+            }
+        }
+        return bestMove;
+    }
+
+    function computerMove() {
+        const winCondition = boardSize === 3 ? 3 : 4;
+        let board = [];
+        const boxes = document.getElementsByClassName("box");
+        Array.from(boxes).forEach((element) => {
+            const boxText = element.querySelector(".boxtext");
+            if (boxText.innerText !== '') {
+                board.push(boxText.innerText);
+            } else {
+                board.push(null);
+            }
+        });
+
+        const winPatterns = generateWinPatterns(boardSize, winCondition);
+        let bestMove = findBestMove(board, winPatterns);
+
+        Array.from(boxes).forEach((element, index) => {
+            const boxText = element.querySelector(".boxtext");
+            if (bestMove === index) {
+                element.classList.add("hover");
+                boxText.innerHTML = COMPUTER;
+                moveWithCoputer++;
+                localStorage.setItem("moveWithComputer", `${moveWithCoputer}`);
+                setTimeout(() => {
+                    element.classList.remove("hover");
+                    checkWin(boardSize);
+                    if (!isGameOver) {
+                        checkDraw();
+                    }
+                    saveGameState();
+                }, 200);
+            }
+        });
+    }
+
+
+    // Function to check if there is a winner
+    const checkWin = (boardSize) => {
         const boxTexts = document.getElementsByClassName("boxtext");
-        const winPatterns = [
-            [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6],
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8],
-            [2, 4, 6]
-        ];
+        const winCondition = boardSize === 3 ? 3 : 4;
+        const winPatterns = generateWinPatterns(boardSize, winCondition);
 
         winPatterns.forEach((pattern) => {
-            if (
-                boxTexts[pattern[0]].innerText === boxTexts[pattern[1]].innerText &&
-                boxTexts[pattern[2]].innerText === boxTexts[pattern[1]].innerText &&
-                boxTexts[pattern[0]].innerText !== ""
-            ) {
+            let isWin = true;
+            for (let i = 1; i < pattern.length; i++) {
+                if (boxTexts[pattern[i]].innerText !== boxTexts[pattern[0]].innerText || boxTexts[pattern[0]].innerText === "") {
+                    isWin = false;
+                    break;
+                }
+            }
+            if (isWin) {
                 let blinkInterval = setInterval(() => {
-                    boxTexts[pattern[0]].classList.toggle("blinking");
-                    boxTexts[pattern[1]].classList.toggle("blinking");
-                    boxTexts[pattern[2]].classList.toggle("blinking");
+                    pattern.forEach((index) => {
+                        boxTexts[index].classList.toggle("blinking");
+                    });
                 }, 200);
 
-                if (boxTexts[pattern[0]].innerText === "X") {
+                const winnerSymbol = boxTexts[pattern[0]].innerText;
+                if (winnerSymbol === "X") {
                     imgBox[0].style.display = "block";
                     updatePlayerScore(++playerScore);
                     localStorage.setItem("ply", `${playerScore}`);
                 } else {
                     updatePlayer2Score(++computerScore);
-                    localStorage.setItem("computerScore", `${computerScore}`);
+                    localStorage.setItem("", `${computerScore}`);
                     imgBox[1].style.display = "block";
                 }
-
-                document.getElementById("info").style.display = "block";
-                document.getElementById("info").innerHTML = `${obj[boxTexts[pattern[0]].innerHTML]} Won`;
+                document.querySelector(".info").innerText = `Computer Won`;
                 isGameOver = true;
-                if (!isMuted) { play_gameover(); }
-
+                if (!isMuted) {
+                    play_gameover();
+                }
 
                 setTimeout(() => {
                     clearInterval(blinkInterval);
-                    boxTexts[pattern[0]].classList.remove("blinking");
-                    boxTexts[pattern[1]].classList.remove("blinking");
-                    boxTexts[pattern[2]].classList.remove("blinking");
+                    pattern.forEach((index) => {
+                        boxTexts[index].classList.remove("blinking");
+                    });
                     resetGame();
                 }, 1800);
             }
         });
     };
-
 
 
 
@@ -656,11 +1012,13 @@ function startComputer() {
             if (boxText.innerText === "" && !isGameOver) {
                 element.classList.toggle("hover");
                 boxText.innerText = "X";
-                if (!isMuted) { play_turn_x(); }
+                if (!isMuted) {
+                    play_turn_x();
+                }
                 saveGameState();
                 moveWithCoputer++;
-                localStorage.setItem("moveWithCoputer", `${moveWithCoputer}`);
-                checkWin();
+                localStorage.setItem(`moveWithCoputer${boardSize}`, `${moveWithCoputer}`);
+                checkWin(boardSize);
                 if (!isGameOver) {
                     if (!checkDraw()) {
                         setTimeout(() => computerMove(), 300);
@@ -669,116 +1027,6 @@ function startComputer() {
             }
         });
     });
-
-
-    const PLAYER = 'X';
-    const COMPUTER = 'O';
-
-    const winningCombos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
-
-    function checkWinner(board, player) {
-        for (let combo of winningCombos) {
-            if (combo.every(index => board[index] === player)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function isBoardFull(board) {
-        return board.every(cell => cell === PLAYER || cell === COMPUTER);
-    }
-
-    function minimax(board, depth, isMaximizing) {
-        if (checkWinner(board, COMPUTER)) return 10 - depth;
-        if (checkWinner(board, PLAYER)) return depth - 10;
-        if (isBoardFull(board)) return 0;
-
-        if (isMaximizing) {
-            let maxEval = -Infinity;
-            for (let i = 0; i < board.length; i++) {
-                if (board[i] === null) {
-                    board[i] = COMPUTER;
-                    let eval = minimax(board, depth + 1, false);
-                    board[i] = null;
-                    maxEval = Math.max(maxEval, eval);
-                }
-            }
-            return maxEval;
-        } else {
-            let minEval = Infinity;
-            for (let i = 0; i < board.length; i++) {
-                if (board[i] === null) {
-                    board[i] = PLAYER;
-                    let eval = minimax(board, depth + 1, true);
-                    board[i] = null;
-                    minEval = Math.min(minEval, eval);
-                }
-            }
-            return minEval;
-        }
-    }
-
-    function findBestMove(board) {
-        let bestMove = -1;
-        let bestValue = -Infinity;
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === null) {
-                board[i] = COMPUTER;
-                let moveValue = minimax(board, 0, false);
-                board[i] = null;
-                if (moveValue > bestValue) {
-                    bestValue = moveValue;
-                    bestMove = i;
-                }
-            }
-        }
-        return bestMove;
-    }
-
-
-
-
-    function computerMove() {
-        let board = [];
-        const boxes = document.getElementsByClassName("box");
-        Array.from(boxes).forEach((element) => {
-            const boxText = element.querySelector(".boxtext");
-            if (boxText.innerText != '')
-                board.push(boxText.innerText);
-            else {
-                board.push(null);
-            }
-        });
-        let temp = findBestMove(board);
-        Array.from(boxes).forEach((element, index) => {
-            const boxText = element.querySelector(".boxtext");
-            if (temp == index) {
-                element.classList.add("hover")
-                boxText.innerHTML = "O";
-                setTimeout(() => {
-                    element.classList.remove("hover");
-                    localStorage.setItem("moveWithCoputer", ++moveWithCoputer);
-                    checkWin();
-                    if (!isGameOver) {
-                        checkDraw();
-                    }
-                    saveGameState();
-                }, 200);
-            }
-        });
-    }
-
-
 
 
     function resetScore() {

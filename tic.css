@@ -145,13 +145,10 @@ body {
     position: relative;
 }
 
-
 .boxtext {
-    position: absolute;
-    color: white;
-    font-size: 3em;
+    color: #fff;
     opacity: 0;
-    transition: opacity 0.3s;
+    animation: appear 0.9s forwards;
 }
 
 .hover {
