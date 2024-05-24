@@ -29,17 +29,20 @@ document.getElementById('oneNameAsking').style.display = 'none';
 document.getElementById('nav').style.display = 'none';
 document.getElementById('modeselect').style.display = 'none';
 
-
 const sizeInput = document.getElementById("size");
 let boardSize = 3;
-
-
-function startGame() {
+function gridforfirsttime() {
     boardSize = parseInt(sizeInput.value);
     createBoard(boardSize);
     document.getElementById('modeselect').style.display = 'flex';
     document.getElementById('gridselect').style.display = 'none';
 }
+document.getElementById('fullscreen').addEventListener("click", gridforfirsttime);
+
+
+
+
+
 
 function createBoard(size) {
     const container = document.getElementById("gridContainer");
@@ -73,85 +76,6 @@ function createBoard(size) {
         container.appendChild(box);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Function to generate win patterns dynamically based on board size and win condition
@@ -255,16 +179,98 @@ document.getElementById('mode').addEventListener("click", () => {
 
 
 
+
+
+
+document.getElementById("grid").addEventListener("click", function () {
+    document.getElementById('gridselect').style.display = 'flex';
+    document.getElementById('fullscreen').removeEventListener("click", gridforfirsttime);
+    document.getElementById('fullscreen').addEventListener("click", function () {
+        const gameContainer = document.querySelector('.gameContainer');
+        gameContainer.classList.remove('fade-in');
+        void gameContainer.offsetWidth;
+        gameContainer.classList.add('fade-in');
+        boardSize = parseInt(sizeInput.value);
+        createBoard(boardSize);
+        document.getElementById('gridselect').style.display = 'none';
+
+
+        if (executeFuncLocal) {
+            executeFuncComp = false;
+            executeFuncLocal = true;
+            document.getElementById("info").style.display = "block";
+            const boxes = document.getElementsByClassName("box");
+            let temp = document.getElementById('btn-container');
+            temp.replaceWith(temp.cloneNode(true));
+            temp = document.getElementById("reset");
+            temp.replaceWith(temp.cloneNode(true));
+            temp = document.getElementById("clear-score");
+            temp.replaceWith(temp.cloneNode(true));
+            temp = document.getElementById("rename");
+            temp.replaceWith(temp.cloneNode(true));
+
+            Array.from(boxes).forEach((element) => {
+                element.replaceWith(element.cloneNode(true));
+                element.innerHTML = "";
+            });
+            startDoubleGame();
+            document.getElementById('mode').innerHTML = "Play with Computer";
+        } else {
+            executeFuncLocal = false;
+            executeFuncComp = true;
+            const boxes = document.getElementsByClassName("box");
+            let temp = document.getElementById('btn-container');
+            temp.replaceWith(temp.cloneNode(true));
+
+            temp = document.getElementById("reset");
+            temp.replaceWith(temp.cloneNode(true));
+            temp = document.getElementById("clear-score");
+            temp.replaceWith(temp.cloneNode(true));
+            temp = document.getElementById("rename");
+            temp.replaceWith(temp.cloneNode(true));
+
+            Array.from(boxes).forEach((element) => {
+                element.replaceWith(element.cloneNode(true));
+                element.innerHTML = "";
+            });
+            startComputer();
+            document.getElementById('mode').innerHTML = "Play with Local";
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const volumeIcon = document.getElementById('volume');
 let isMuted = false;
 
 volumeIcon.addEventListener('click', function () {
     if (isMuted) {
-        volumeIcon.src = 'volume-up.png';
+        volumeIcon.src = "{{url_for('static',filename='volume-up.png')}}";
         volumeIcon.classList.remove('clicked');
         isMuted = false;
     } else {
-        volumeIcon.src = 'mute.png';
+        volumeIcon.src = "{{url_for('static',filename='mute.png')}}";
         volumeIcon.classList.add('clicked');
         isMuted = true;
     }
@@ -315,8 +321,6 @@ function play_gameover() {
 }
 
 
-
-
 function startDoubleGame() {
 
     updateNames();
@@ -327,6 +331,7 @@ function startDoubleGame() {
     function updateNames() {
         const player1Name = localStorage.getItem(`player1Name`);
         const player2Name = localStorage.getItem(`player2Name`);
+        loadGameState();
 
         if (player1Name && player2Name) {
             document.getElementById('player1Name').value = player1Name;
@@ -612,6 +617,8 @@ function startComputer() {
 
     function updateNames() {
         playerName = localStorage.getItem(`playerName`);
+        loadGameState();
+
 
         if (playerName) {
             document.getElementById('playerName').value = playerName;
@@ -908,6 +915,8 @@ function startComputer() {
     }
 
     function computerMove() {
+        moveWithCoputer++;
+        localStorage.setItem(`moveWithCoputer${boardSize}`, `${moveWithCoputer}`);
         const winCondition = boardSize === 3 ? 3 : 4;
         let board = [];
         const boxes = document.getElementsByClassName("box");
@@ -928,8 +937,6 @@ function startComputer() {
             if (bestMove === index) {
                 element.classList.add("hover");
                 boxText.innerHTML = COMPUTER;
-                moveWithCoputer++;
-                localStorage.setItem("moveWithComputer", `${moveWithCoputer}`);
                 setTimeout(() => {
                     element.classList.remove("hover");
                     checkWin(boardSize);
