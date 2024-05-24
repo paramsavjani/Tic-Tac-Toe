@@ -18,8 +18,12 @@ document.getElementById("two").addEventListener("click", () => {
 
 })
 document.getElementById('mode').addEventListener("click", () => {
-    if (executeFuncComp) {
+    const gameContainer = document.querySelector('.gameContainer');
+    gameContainer.classList.remove('fade-in');
+    void gameContainer.offsetWidth;
+    gameContainer.classList.add('fade-in');
 
+    if (executeFuncComp) {
         executeFuncComp = false;
         executeFuncLocal = true;
         document.getElementById("info").style.display = "block";
@@ -36,13 +40,10 @@ document.getElementById('mode').addEventListener("click", () => {
         Array.from(boxes).forEach((element) => {
             element.replaceWith(element.cloneNode(true));
             element.innerHTML = "";
-        })
+        });
         startDoubleGame();
-        document.getElementById('mode').innerHTML = "Play with Computer"
-
-    }
-    else {
-
+        document.getElementById('mode').innerHTML = "Play with Computer";
+    } else {
         executeFuncLocal = false;
         executeFuncComp = true;
         const boxes = document.getElementsByClassName("box");
@@ -59,12 +60,12 @@ document.getElementById('mode').addEventListener("click", () => {
         Array.from(boxes).forEach((element) => {
             element.replaceWith(element.cloneNode(true));
             element.innerHTML = "";
-        })
+        });
         startComputer();
-        document.getElementById('mode').innerHTML = "Play with Local"
-
+        document.getElementById('mode').innerHTML = "Play with Local";
     }
-})
+});
+
 
 
 const volumeIcon = document.getElementById('volume');

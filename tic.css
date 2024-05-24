@@ -103,12 +103,14 @@ body {
     filter: invert(0.5);
 }
 
-
 .gameContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+}
+
+.gameContainer.fade-in {
     animation: fadeIn 1s ease-in-out;
 }
 
