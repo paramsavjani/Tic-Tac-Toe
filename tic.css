@@ -122,7 +122,6 @@ body {
     display: grid;
     grid-template-rows: repeat(3, 10vw);
     grid-template-columns: repeat(3, 10vw);
-    gap: 5px;
     position: relative;
     animation: fadeIn 1s ease-in-out;
 }
@@ -147,9 +146,9 @@ body {
 .hover {
     background-color: #333;
     transform: scale(1.05);
-    /* border-radius: 15px; */
+    border-radius: 15px;
     /* transform: scale(1.5); */
-    box-shadow: 0 0 10px rgba(203, 197, 197, 0.5);
+    box-shadow: 0 0 15px rgba(203, 197, 197, 0.5);
 }
 
 @keyframes appear {

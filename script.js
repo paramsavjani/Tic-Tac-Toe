@@ -325,7 +325,7 @@ function startDoubleGame() {
                     boxTexts[pattern[0]].classList.toggle("blinking");
                     boxTexts[pattern[1]].classList.toggle("blinking");
                     boxTexts[pattern[2]].classList.toggle("blinking");
-                }, 150);
+                }, 200);
 
                 if (boxTexts[pattern[0]].innerText === "X") {
                     imgBox[0].style.display = "block";
@@ -346,7 +346,7 @@ function startDoubleGame() {
                     boxTexts[pattern[1]].classList.remove("blinking");
                     boxTexts[pattern[2]].classList.remove("blinking");
                     resetGame();
-                }, 1200);
+                }, 1800);
             }
         });
     };
@@ -605,7 +605,7 @@ function startComputer() {
                     boxTexts[pattern[0]].classList.toggle("blinking");
                     boxTexts[pattern[1]].classList.toggle("blinking");
                     boxTexts[pattern[2]].classList.toggle("blinking");
-                }, 150);
+                }, 200);
 
                 if (boxTexts[pattern[0]].innerText === "X") {
                     imgBox[0].style.display = "block";
@@ -629,7 +629,7 @@ function startComputer() {
                     boxTexts[pattern[1]].classList.remove("blinking");
                     boxTexts[pattern[2]].classList.remove("blinking");
                     resetGame();
-                }, 1200);
+                }, 1800);
             }
         });
     };
