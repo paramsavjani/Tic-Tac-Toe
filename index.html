@@ -15,6 +15,22 @@
         <link rel="stylesheet" href="pop.css" />
     </head>
     <body>
+        <div class="popup-container" id="gridselect">
+            <div class="popup-content">
+                <h2>Game Selector</h2>
+                <div class="grid-selector">
+                    <label for="size">Select Board Size:</label>
+                    <select id="size">
+                        <option value="3">3x3</option>
+                        <option value="5">5x5</option>
+                        <option value="7">7x7</option>
+                    </select>
+                </div>
+                <div class="btn-container">
+                    <button onclick="startGame()">Start Game</button>
+                </div>
+            </div>
+        </div>
         <div class="popup-container" id="modeselect">
             <div class="popup-content">
                 <h2>Select Mode</h2>
@@ -67,17 +83,7 @@
             <img src="volume-up.png" alt="volume logo" id="volume" />
         </nav>
         <div class="gameContainer" id="gameContainer">
-            <div class="container">
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-                <div class="box"><span class="boxtext"></span></div>
-            </div>
+            <div class="container"></div>
             <div class="param">
                 <div class="imgbox">
                     <img src="excited.gif" alt="Excited Gif" />

@@ -21,6 +21,28 @@
     padding: 10px;
 }
 
+/* Grid selector styles */
+.grid-selector {
+    margin-bottom: 20px;
+}
+
+.grid-selector label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.grid-selector select {
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+}
+
 .popup-content {
     background-color: #1f1f1f;
     padding: 20px;
