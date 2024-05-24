@@ -20,6 +20,13 @@
         font-size: 1.5rem;
     }
 
+    .score p {
+        font-size: 2vh;
+        margin: 0;
+        font-family: "Poetsen One", sans-serif;
+        /* Removes default paragraph margin */
+    }
+
     .param {
         flex-direction: column;
         align-items: center;
@@ -252,7 +259,7 @@ body {
     margin-top: 20px;
     margin-bottom: 13px;
     /* Adjust as needed */
-    gap: 50px;
+    gap: 35px;
 }
 
 .score {
