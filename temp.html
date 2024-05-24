@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: grid;
+            /*gap: 5px;*/
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+            width: 50%; /* 70% of viewport width */
+            height: 50%; /* 70% of viewport width */
+            max-width: 50%;
+            max-height: 50%;
+        }
+
+        .cell {
+            background-color: #1f1f1f;
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #333;
+        }
+
+        .cell::after {
+            content: "";
+            opacity: 0;
+            position: absolute;
+            color: white;
+            font-size: 3em;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div>
+    <label for="size">Board Size:</label>
+    <input type="number" id="size" value="3" min="3" max="10">
+    <button onclick="startGame()">Start Game</button>
+</div>
+<div class="container" id="gridContainer">
+    <!-- Cells will be dynamically inserted here -->
+</div>
+<script>
+    let currentPlayer = "X";
+    let boardSize = 3;
+
+    function startGame() {
+        const sizeInput = document.getElementById("size");
+        boardSize = parseInt(sizeInput.value);
+        createBoard(boardSize);
+    }
+
+    function createBoard(size) {
+        const container = document.getElementById("gridContainer");
+        container.innerHTML = "";
+
+        const gapSize = 15/size;
+        const containerSize = 50; // 50% of the viewport width
+        const totalGap = (size - 1) * gapSize;
+        const cellSize = (containerSize - (totalGap / window.innerWidth * 100)) / size; // Calculate cell size in vw
+        
+        container.style.gap = `${gapSize}px`
+        container.style.gridTemplateColumns = `repeat(${size}, ${cellSize}vw)`;
+        container.style.gridTemplateRows = `repeat(${size}, ${cellSize}vw)`;
+
+        for (let i = 0; i < size * size; i++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.dataset.index = i;
+            cell.addEventListener("click", () => handleMove(cell));
+            container.appendChild(cell);
+        }
+    }
+
+    function handleMove(cell) {
+        if (!cell.textContent) {
+            cell.textContent = currentPlayer;
+            checkWinner();
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+        }
+    }
+
+    function checkWinner() {
+        const container = document.getElementById("gridContainer");
+        const cells = container.querySelectorAll(".cell");
+        const rows = [];
+        const cols = [];
+        let diag1 = [];
+        let diag2 = [];
+
+        for (let i = 0; i < boardSize; i++) {
+            rows.push([]);
+            cols.push([]);
+        }
+
+        cells.forEach((cell, index) => {
+            const row = Math.floor(index / boardSize);
+            const col = index % boardSize;
+
+            rows[row].push(cell.textContent);
+            cols[col].push(cell.textContent);
+
+            if (row === col) diag1.push(cell.textContent);
+            if (row + col === boardSize - 1) diag2.push(cell.textContent);
+        });
+
+        const checkArrays = [diag1, diag2];
+        checkArrays.push(...rows, ...cols);
+
+        for (let array of checkArrays) {
+            if (array.every((value) => value === "X")) {
+                announceWinner("X");
+                return;
+            }
+            if (array.every((value) => value === "O")) {
+                announceWinner("O");
+                return;
+            }
+        }
+
+        // Check for tie
+        if ([...cells].every((cell) => cell.textContent)) {
+            announceWinner("Tie");
+        }
+    }
+
+    function announceWinner(winner) {
+        if (winner === "Tie") {
+            alert("It's a tie!");
+        } else {
+            alert(`Player ${winner} wins!`);
+        }
+        // Reset the game
+        currentPlayer = "X";
+        createBoard(boardSize);
+    }
+
+    // Start the game with default size
+    startGame();
+</script>
+</body>
+</html>
