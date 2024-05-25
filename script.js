@@ -1,33 +1,18 @@
-document.getElementById("one").addEventListener("click", function () {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        elem.msRequestFullscreen();
-    }
-});
-document.getElementById("two").addEventListener("click", function () {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        elem.msRequestFullscreen();
-    }
-});
-
-document.getElementById('popupContainer').style.display = 'none';
-document.getElementById('gameContainer').style.display = 'none';
-document.getElementById('oneNameAsking').style.display = 'none';
-document.getElementById('nav').style.display = 'none';
-document.getElementById('modeselect').style.display = 'none';
+let temp = document.getElementsByClassName("one");
+for (let i = 0; i < temp.length; i++) {
+    temp[i].addEventListener("click", function () {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+        }
+    });
+}
 
 const sizeInput = document.getElementById("size");
 let boardSize = 3;
@@ -38,14 +23,16 @@ function gridforfirsttime(board) {
     document.getElementById('gridselect').style.display = 'none';
 }
 
+document.getElementById('popupContainer').style.display = 'none';
+document.getElementById('gameContainer').style.display = 'none';
+document.getElementById('oneNameAsking').style.display = 'none';
+document.getElementById('nav').style.display = 'none';
+document.getElementById('modeselect').style.display = 'none';
+
+
 document.getElementById("3 X 3").addEventListener("click", () => gridforfirsttime(3));
 document.getElementById("5 X 5").addEventListener("click", () => gridforfirsttime(5));
 document.getElementById("7 X 7").addEventListener("click", () => gridforfirsttime(7));
-
-
-
-
-
 
 function createBoard(size) {
     const container = document.getElementById("gridContainer");
@@ -694,7 +681,6 @@ function startComputer() {
         document.querySelector('.score.ply1 p:nth-child(1)').innerText = `${playerName} (X)`;
     }
 
-    let gameover = new Audio("{{url_for('static',filename='gameover.mp3')}}");
     let moveWithCoputer = localStorage.getItem(`moveWithCoputer${boardSize}`) ? parseInt(localStorage.getItem(`moveWithCoputer${boardSize}`)) : 0;
 
 
@@ -801,10 +787,6 @@ function startComputer() {
         }
     };
 
-    let obj = {
-        "X": playerName,
-        "O": "Computer",
-    }
 
 
 
