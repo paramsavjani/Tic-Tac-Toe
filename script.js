@@ -37,19 +37,13 @@ document.getElementById("7 X 7").addEventListener("click", () => gridforfirsttim
 function createBoard(size) {
     const container = document.getElementById("gridContainer");
     container.innerHTML = null;
-
-    // Determine the viewport width
     const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-
-    // Set container size based on viewport width
     const containerSize = viewportWidth < 600 ? 90 : 40;
-
     const gapSize = 15 / size;
     const totalGap = (size - 1) * gapSize;
     const boxSize =
         (containerSize - (totalGap / viewportWidth) * 100) /
-        size; // Calculate box size in vw
-
+        size;
     container.style.gap = `${gapSize}px`;
     container.style.gridTemplateColumns = `repeat(${size}, ${boxSize}vw)`;
     container.style.gridTemplateRows = `repeat(${size}, ${boxSize}vw)`;
@@ -57,22 +51,18 @@ function createBoard(size) {
     for (let i = 0; i < size * size; i++) {
         const box = document.createElement("div");
         box.classList.add("box");
-
         const boxtext = document.createElement("div");
         boxtext.classList.add("boxtext");
         boxtext.style.fontSize = `${boxSize / 1.3}vw`; // Changed boardSize to size
-
         box.appendChild(boxtext);
         container.appendChild(box);
     }
 }
 
 
-// Function to generate win patterns dynamically based on board size and win condition
 function generateWinPatterns(boardSize, winCondition) {
     const winPatterns = [];
 
-    // Rows and columns
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j <= boardSize - winCondition; j++) {
             const rowPattern = [];
@@ -86,7 +76,6 @@ function generateWinPatterns(boardSize, winCondition) {
         }
     }
 
-    // Diagonals
     for (let i = 0; i <= boardSize - winCondition; i++) {
         for (let j = 0; j <= boardSize - winCondition; j++) {
             const diagPattern1 = [];
@@ -99,10 +88,8 @@ function generateWinPatterns(boardSize, winCondition) {
             winPatterns.push(diagPattern2);
         }
     }
-
     return winPatterns;
 }
-
 
 let executeFuncLocal = false;
 let executeFuncComp = false;
@@ -112,12 +99,33 @@ document.getElementById("one").addEventListener("click", () => {
     document.getElementById('mode').innerHTML = "Play with Local"
     startComputer();
 })
+
 document.getElementById("two").addEventListener("click", () => {
     executeFuncLocal = true;
     document.getElementById('mode').innerHTML = "Play with Computer"
     startDoubleGame();
 
 })
+
+
+function resetThedata() {
+    let temp = document.getElementById('btn-container');
+    temp.replaceWith(temp.cloneNode(true));
+    temp = document.getElementById("reset");
+    temp.replaceWith(temp.cloneNode(true));
+    temp = document.getElementById("clear-score");
+    temp.replaceWith(temp.cloneNode(true));
+    temp = document.getElementById("rename");
+    temp.replaceWith(temp.cloneNode(true));
+    const boxes = document.getElementsByClassName("box");
+
+    Array.from(boxes).forEach((element) => {
+        element.replaceWith(element.cloneNode(true));
+        element.innerHTML = "";
+    });
+}
+
+
 document.getElementById('mode').addEventListener("click", () => {
     const gameContainer = document.querySelector('.gameContainer');
     gameContainer.classList.remove('fade-in');
@@ -128,40 +136,13 @@ document.getElementById('mode').addEventListener("click", () => {
         executeFuncComp = false;
         executeFuncLocal = true;
         document.getElementById("info").style.display = "block";
-        const boxes = document.getElementsByClassName("box");
-        let temp = document.getElementById('btn-container');
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("reset");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("clear-score");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("rename");
-        temp.replaceWith(temp.cloneNode(true));
-
-        Array.from(boxes).forEach((element) => {
-            element.replaceWith(element.cloneNode(true));
-            element.innerHTML = "";
-        });
+        resetThedata();
         startDoubleGame();
         document.getElementById('mode').innerHTML = "Play with Computer";
     } else {
         executeFuncLocal = false;
         executeFuncComp = true;
-        const boxes = document.getElementsByClassName("box");
-        let temp = document.getElementById('btn-container');
-        temp.replaceWith(temp.cloneNode(true));
-
-        temp = document.getElementById("reset");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("clear-score");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("rename");
-        temp.replaceWith(temp.cloneNode(true));
-
-        Array.from(boxes).forEach((element) => {
-            element.replaceWith(element.cloneNode(true));
-            element.innerHTML = "";
-        });
+        resetThedata();
         startComputer();
         document.getElementById('mode').innerHTML = "Play with Local";
     }
@@ -170,6 +151,7 @@ document.getElementById('mode').addEventListener("click", () => {
 
 
 function changegrid() {
+
     const gameContainer = document.querySelector('.gameContainer');
     gameContainer.classList.remove('fade-in');
     void gameContainer.offsetWidth;
@@ -182,40 +164,13 @@ function changegrid() {
         executeFuncComp = false;
         executeFuncLocal = true;
         document.getElementById("info").style.display = "block";
-        const boxes = document.getElementsByClassName("box");
-        let temp = document.getElementById('btn-container');
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("reset");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("clear-score");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("rename");
-        temp.replaceWith(temp.cloneNode(true));
-
-        Array.from(boxes).forEach((element) => {
-            element.replaceWith(element.cloneNode(true));
-            element.innerHTML = "";
-        });
+        resetThedata();
         startDoubleGame();
         document.getElementById('mode').innerHTML = "Play with Computer";
     } else {
         executeFuncLocal = false;
         executeFuncComp = true;
-        const boxes = document.getElementsByClassName("box");
-        let temp = document.getElementById('btn-container');
-        temp.replaceWith(temp.cloneNode(true));
-
-        temp = document.getElementById("reset");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("clear-score");
-        temp.replaceWith(temp.cloneNode(true));
-        temp = document.getElementById("rename");
-        temp.replaceWith(temp.cloneNode(true));
-
-        Array.from(boxes).forEach((element) => {
-            element.replaceWith(element.cloneNode(true));
-            element.innerHTML = "";
-        });
+        resetThedata();
         startComputer();
         document.getElementById('mode').innerHTML = "Play with Local";
     }
@@ -223,31 +178,17 @@ function changegrid() {
 
 
 
-
-
 document.getElementById("grid").addEventListener("click", function () {
     document.getElementById('gridselect').style.display = 'flex';
     let oldElement = document.getElementById("3 X 3");
     let newElement = oldElement.cloneNode(true);
-
     oldElement.parentNode.replaceChild(newElement, oldElement);
-
-
     oldElement = document.getElementById("5 X 5");
     newElement = oldElement.cloneNode(true);
-
     oldElement.parentNode.replaceChild(newElement, oldElement);
-
-
     oldElement = document.getElementById("7 X 7");
     newElement = oldElement.cloneNode(true);
-
     oldElement.parentNode.replaceChild(newElement, oldElement);
-
-
-
-
-
     document.getElementById('3 X 3').addEventListener("click", function () {
         boardSize = 3;
         changegrid();
@@ -262,44 +203,20 @@ document.getElementById("grid").addEventListener("click", function () {
     })
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const volumeIcon = document.getElementById('volume');
 let isMuted = false;
 
 volumeIcon.addEventListener('click', function () {
     if (isMuted) {
-        volumeIcon.src = "{{url_for('static',filename='volume-up.png')}}";
+        volumeIcon.src = "/static/volume.png";
         volumeIcon.classList.remove('clicked');
         isMuted = false;
     } else {
-        volumeIcon.src = "{{url_for('static',filename='mute.png')}}";
+        volumeIcon.src = "{/static/mute.png}";
         volumeIcon.classList.add('clicked');
         isMuted = true;
     }
 });
-
-
 
 // Initialize AudioContext
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -344,6 +261,7 @@ function play_gameover() {
 }
 
 
+
 function startDoubleGame() {
 
     updateNames();
@@ -351,7 +269,6 @@ function startDoubleGame() {
     document.getElementById('modeselect').style.display = 'none';
     document.getElementById('btn-container').addEventListener("click", startGame);
 
-    function updateNames() {
         const player1Name = localStorage.getItem(`player1Name`);
         const player2Name = localStorage.getItem(`player2Name`);
         loadGameState();
@@ -367,7 +284,7 @@ function startDoubleGame() {
         } else {
             document.getElementById('popupContainer').style.display = 'flex';
         }
-    }
+    
 
     function startGame() {
         const player1Name = document.getElementById('player1Name').value;
