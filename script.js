@@ -31,13 +31,16 @@ document.getElementById('modeselect').style.display = 'none';
 
 const sizeInput = document.getElementById("size");
 let boardSize = 3;
-function gridforfirsttime() {
-    boardSize = parseInt(sizeInput.value);
+function gridforfirsttime(board) {
+    boardSize = board;
     createBoard(boardSize);
     document.getElementById('modeselect').style.display = 'flex';
     document.getElementById('gridselect').style.display = 'none';
 }
-document.getElementById('fullscreen').addEventListener("click", gridforfirsttime);
+
+document.getElementById("3 X 3").addEventListener("click", () => gridforfirsttime(3));
+document.getElementById("5 X 5").addEventListener("click", () => gridforfirsttime(5));
+document.getElementById("7 X 7").addEventListener("click", () => gridforfirsttime(7));
 
 
 
@@ -52,7 +55,7 @@ function createBoard(size) {
     const viewportWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
     // Set container size based on viewport width
-    const containerSize = viewportWidth < 600 ? 90 : 35;
+    const containerSize = viewportWidth < 600 ? 90 : 40;
 
     const gapSize = 15 / size;
     const totalGap = (size - 1) * gapSize;
@@ -70,7 +73,7 @@ function createBoard(size) {
 
         const boxtext = document.createElement("div");
         boxtext.classList.add("boxtext");
-        boxtext.style.fontSize = `${300 / size}px`; // Changed boardSize to size
+        boxtext.style.fontSize = `${boxSize / 1.3}vw`; // Changed boardSize to size
 
         box.appendChild(boxtext);
         container.appendChild(box);
@@ -179,63 +182,96 @@ document.getElementById('mode').addEventListener("click", () => {
 
 
 
+function changegrid() {
+    const gameContainer = document.querySelector('.gameContainer');
+    gameContainer.classList.remove('fade-in');
+    void gameContainer.offsetWidth;
+    gameContainer.classList.add('fade-in');
+    createBoard(boardSize);
+    document.getElementById('gridselect').style.display = 'none';
+
+
+    if (executeFuncLocal) {
+        executeFuncComp = false;
+        executeFuncLocal = true;
+        document.getElementById("info").style.display = "block";
+        const boxes = document.getElementsByClassName("box");
+        let temp = document.getElementById('btn-container');
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("reset");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("clear-score");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("rename");
+        temp.replaceWith(temp.cloneNode(true));
+
+        Array.from(boxes).forEach((element) => {
+            element.replaceWith(element.cloneNode(true));
+            element.innerHTML = "";
+        });
+        startDoubleGame();
+        document.getElementById('mode').innerHTML = "Play with Computer";
+    } else {
+        executeFuncLocal = false;
+        executeFuncComp = true;
+        const boxes = document.getElementsByClassName("box");
+        let temp = document.getElementById('btn-container');
+        temp.replaceWith(temp.cloneNode(true));
+
+        temp = document.getElementById("reset");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("clear-score");
+        temp.replaceWith(temp.cloneNode(true));
+        temp = document.getElementById("rename");
+        temp.replaceWith(temp.cloneNode(true));
+
+        Array.from(boxes).forEach((element) => {
+            element.replaceWith(element.cloneNode(true));
+            element.innerHTML = "";
+        });
+        startComputer();
+        document.getElementById('mode').innerHTML = "Play with Local";
+    }
+}
+
+
 
 
 
 document.getElementById("grid").addEventListener("click", function () {
     document.getElementById('gridselect').style.display = 'flex';
-    document.getElementById('fullscreen').removeEventListener("click", gridforfirsttime);
-    document.getElementById('fullscreen').addEventListener("click", function () {
-        const gameContainer = document.querySelector('.gameContainer');
-        gameContainer.classList.remove('fade-in');
-        void gameContainer.offsetWidth;
-        gameContainer.classList.add('fade-in');
-        boardSize = parseInt(sizeInput.value);
-        createBoard(boardSize);
-        document.getElementById('gridselect').style.display = 'none';
+    let oldElement = document.getElementById("3 X 3");
+    let newElement = oldElement.cloneNode(true);
+
+    oldElement.parentNode.replaceChild(newElement, oldElement);
 
 
-        if (executeFuncLocal) {
-            executeFuncComp = false;
-            executeFuncLocal = true;
-            document.getElementById("info").style.display = "block";
-            const boxes = document.getElementsByClassName("box");
-            let temp = document.getElementById('btn-container');
-            temp.replaceWith(temp.cloneNode(true));
-            temp = document.getElementById("reset");
-            temp.replaceWith(temp.cloneNode(true));
-            temp = document.getElementById("clear-score");
-            temp.replaceWith(temp.cloneNode(true));
-            temp = document.getElementById("rename");
-            temp.replaceWith(temp.cloneNode(true));
+    oldElement = document.getElementById("5 X 5");
+    newElement = oldElement.cloneNode(true);
 
-            Array.from(boxes).forEach((element) => {
-                element.replaceWith(element.cloneNode(true));
-                element.innerHTML = "";
-            });
-            startDoubleGame();
-            document.getElementById('mode').innerHTML = "Play with Computer";
-        } else {
-            executeFuncLocal = false;
-            executeFuncComp = true;
-            const boxes = document.getElementsByClassName("box");
-            let temp = document.getElementById('btn-container');
-            temp.replaceWith(temp.cloneNode(true));
+    oldElement.parentNode.replaceChild(newElement, oldElement);
 
-            temp = document.getElementById("reset");
-            temp.replaceWith(temp.cloneNode(true));
-            temp = document.getElementById("clear-score");
-            temp.replaceWith(temp.cloneNode(true));
-            temp = document.getElementById("rename");
-            temp.replaceWith(temp.cloneNode(true));
 
-            Array.from(boxes).forEach((element) => {
-                element.replaceWith(element.cloneNode(true));
-                element.innerHTML = "";
-            });
-            startComputer();
-            document.getElementById('mode').innerHTML = "Play with Local";
-        }
+    oldElement = document.getElementById("7 X 7");
+    newElement = oldElement.cloneNode(true);
+
+    oldElement.parentNode.replaceChild(newElement, oldElement);
+
+
+
+
+
+    document.getElementById('3 X 3').addEventListener("click", function () {
+        boardSize = 3;
+        changegrid();
+    })
+    document.getElementById('5 X 5').addEventListener("click", function () {
+        boardSize = 5;
+        changegrid();
+    })
+    document.getElementById('7 X 7').addEventListener("click", function () {
+        boardSize = 7;
+        changegrid();
     })
 })
 
