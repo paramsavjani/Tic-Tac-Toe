@@ -212,7 +212,7 @@ volumeIcon.addEventListener('click', function () {
         volumeIcon.classList.remove('clicked');
         isMuted = false;
     } else {
-        volumeIcon.src = "{/static/mute.png}";
+        volumeIcon.src = "/static/mute.png";
         volumeIcon.classList.add('clicked');
         isMuted = true;
     }
@@ -264,27 +264,26 @@ function play_gameover() {
 
 function startDoubleGame() {
 
-    updateNames();
+
+
+    const player1Name = localStorage.getItem(`player1Name`);
+    const player2Name = localStorage.getItem(`player2Name`);
+    loadGameState();
+
+    if (player1Name && player2Name) {
+        document.getElementById('player1Name').value = player1Name;
+        document.getElementById('player2Name').value = player2Name;
+        document.getElementById('popupContainer').style.display = 'none';
+        document.querySelector('.score.ply1 p:nth-child(1)').innerText = `${player1Name} (X)`;
+        document.querySelector('.score.ply2 p:nth-child(1)').innerText = `${player2Name} (O)`;
+        document.getElementById('gameContainer').style.display = 'flex';
+        document.getElementById('nav').style.display = 'flex';
+    } else {
+        document.getElementById('popupContainer').style.display = 'flex';
+    }
 
     document.getElementById('modeselect').style.display = 'none';
     document.getElementById('btn-container').addEventListener("click", startGame);
-
-        const player1Name = localStorage.getItem(`player1Name`);
-        const player2Name = localStorage.getItem(`player2Name`);
-        loadGameState();
-
-        if (player1Name && player2Name) {
-            document.getElementById('player1Name').value = player1Name;
-            document.getElementById('player2Name').value = player2Name;
-            document.getElementById('popupContainer').style.display = 'none';
-            document.querySelector('.score.ply1 p:nth-child(1)').innerText = `${player1Name} (X)`;
-            document.querySelector('.score.ply2 p:nth-child(1)').innerText = `${player2Name} (O)`;
-            document.getElementById('gameContainer').style.display = 'flex';
-            document.getElementById('nav').style.display = 'flex';
-        } else {
-            document.getElementById('popupContainer').style.display = 'flex';
-        }
-    
 
     function startGame() {
         const player1Name = document.getElementById('player1Name').value;
