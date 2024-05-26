@@ -627,7 +627,9 @@ function startComputer() {
         if (checkWinner(board, COMPUTER, winPatterns)) return 10 - depth;
         if (checkWinner(board, PLAYER, winPatterns)) return depth - 10;
         if (isBoardFull(board)) return 0;
-        if (depth > 6) return 0;
+        if(boardSize===3 && depth>12) return 0;
+        if(boardSize===5 && depth>7) return 0;
+        if(boardSize===7 && depth>6) return 0;
         if (isMaximizing) {
             let maxEval = -Infinity;
             for (let i = 0; i < board.length; i++) {
