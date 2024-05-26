@@ -59,38 +59,6 @@ function createBoard(size) {
     }
 }
 
-
-function generateWinPatterns(boardSize, winCondition) {
-    const winPatterns = [];
-
-    for (let i = 0; i < boardSize; i++) {
-        for (let j = 0; j <= boardSize - winCondition; j++) {
-            const rowPattern = [];
-            const colPattern = [];
-            for (let k = 0; k < winCondition; k++) {
-                rowPattern.push(i * boardSize + (j + k));
-                colPattern.push((j + k) * boardSize + i);
-            }
-            winPatterns.push(rowPattern);
-            winPatterns.push(colPattern);
-        }
-    }
-
-    for (let i = 0; i <= boardSize - winCondition; i++) {
-        for (let j = 0; j <= boardSize - winCondition; j++) {
-            const diagPattern1 = [];
-            const diagPattern2 = [];
-            for (let k = 0; k < winCondition; k++) {
-                diagPattern1.push((i + k) * boardSize + (j + k));
-                diagPattern2.push((i + k) * boardSize + (j + winCondition - 1 - k));
-            }
-            winPatterns.push(diagPattern1);
-            winPatterns.push(diagPattern2);
-        }
-    }
-    return winPatterns;
-}
-
 let executeFuncLocal = false;
 let executeFuncComp = false;
 
@@ -702,10 +670,6 @@ function startComputer() {
             return false;
         }
     };
-
-
-
-
 
     function generateWinPatterns(boardSize, winCondition) {
         let winPatterns = [];
