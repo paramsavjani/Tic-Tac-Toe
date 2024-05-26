@@ -14,6 +14,7 @@
 
     .box {
         font-size: 15vw;
+        cursor: alias;
     }
 
     .gameInfo h1 {
@@ -235,21 +236,6 @@ body {
 
     100% {
         transform: scale(1);
-    }
-}
-
-@media screen and (max-width: 950px) {
-    .container {
-        grid-template-rows: repeat(3, 20vw);
-        grid-template-columns: repeat(3, 20vw);
-    }
-
-    .box {
-        font-size: 15vw;
-    }
-
-    .gameInfo h1 {
-        font-size: 1.5rem;
     }
 }
 
