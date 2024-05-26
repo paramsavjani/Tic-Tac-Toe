@@ -627,9 +627,9 @@ function startComputer() {
         if (checkWinner(board, COMPUTER, winPatterns)) return 10 - depth;
         if (checkWinner(board, PLAYER, winPatterns)) return depth - 10;
         if (isBoardFull(board)) return 0;
-        if(boardSize===3 && depth>12) return 0;
-        if(boardSize===5 && depth>7) return 0;
-        if(boardSize===7 && depth>6) return 0;
+        if (boardSize === 3 && depth > 12) return 0;
+        if (boardSize === 5 && depth > 7) return 0;
+        if (boardSize === 7 && depth > 6) return 0;
         if (isMaximizing) {
             let maxEval = -Infinity;
             for (let i = 0; i < board.length; i++) {
@@ -690,23 +690,22 @@ function startComputer() {
                 board.push(null);
             }
         });
-        const winPatterns = generateWinPatterns(boardSize, winCondition);
-        let bestMove = findBestMove(board, winPatterns);
-        Array.from(boxes).forEach((element, index) => {
-            const boxText = element.querySelector(".boxtext");
-            if (bestMove === index) {
-                element.classList.add("hover");
-                boxText.innerHTML = COMPUTER;
-                setTimeout(() => {
-                    element.classList.remove("hover");
-                    checkWin(boardSize);
-                    if (!isGameOver) {
-                        checkDraw();
-                    }
-                    saveGameState();
-                }, 200);
+        setTimeout(() => {
+            const winPatterns = generateWinPatterns(boardSize, winCondition);
+            let bestMove = findBestMove(board, winPatterns);
+
+            boxes[bestMove].querySelector(".boxtext").innerText = COMPUTER;
+            boxes[bestMove].classList.add("hover");
+            boxes[bestMove].classList.remove("hover");
+            checkWin(boardSize);
+            if (!isGameOver) {
+                checkDraw();
             }
-        });
+            play_turn_0();
+            saveGameState();
+            isready = true;
+        }, 200);
+
     }
     const checkWin = (boardSize) => {
         const boxTexts = document.getElementsByClassName("boxtext");
@@ -763,7 +762,7 @@ function startComputer() {
             element.classList.remove("hover");
         });
         element.addEventListener("click", () => {
-            if (boxText.innerText === "" && !isGameOver) {
+            if (boxText.innerText === "" && !isGameOver && isready) {
                 element.classList.toggle("hover");
                 boxText.innerText = "X";
                 if (!isMuted) {
@@ -773,6 +772,7 @@ function startComputer() {
                 moveWithCoputer++;
                 localStorage.setItem(`moveWithCoputer${boardSize}`, `${moveWithCoputer}`);
                 checkWin(boardSize);
+                isready =false;
                 if (!isGameOver) {
                     if (!checkDraw()) {
                         setTimeout(() => computerMove(), 300);
