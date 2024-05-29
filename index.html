@@ -1,121 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link
-            rel="icon"
-            href="/static/icon.png"
-            <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-        />
-        <meta name="description" content="Welcome to our Tic Tac Toe game website! Play Tic Tac Toe online with customizable grid sizes ranging from the classic 3x3 board to larger, more challenging grids up to 10x10. Challenge yourself against our advanced AI or compete with friends locally for hours of fun. Our intuitive interface, vibrant graphics, and smooth gameplay make this the ultimate destination for Tic Tac Toe enthusiasts. Whether you're a seasoned player or just starting out, our website offers a delightful experience suitable for all skill levels. Join thousands of players worldwide and elevate your Tic Tac Toe game to the next level today!">
-        <title>Tic Tac Toe</title>
-        <link rel="stylesheet" href="/static/tic.css" />
-        <link rel="stylesheet" href="/static/pop.css" />
-    </head>
-    <body>
-        <div class="popup-container" id="gridselect">
-            <div class="popup-content">
-                <h2>Grid Selector</h2>
-                <div class="btn-container">
-                    <button id="3 X 3">3 X 3</button>
-                    <button id="5 X 5">5 X 5</button>
-                    <button id="7 X 7">7 X 7</button>
-                </div>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/static/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Welcome to our Tic Tac Toe game website! Play Tic Tac Toe online with customizable grid sizes ranging from the classic 3x3 board to larger, more challenging grids up to 10x10. Challenge yourself against our advanced AI or compete with friends locally for hours of fun. Our intuitive interface, vibrant graphics, and smooth gameplay make this the ultimate destination for Tic Tac Toe enthusiasts. Whether you're a seasoned player or just starting out, our website offers a delightful experience suitable for all skill levels. Join thousands of players worldwide and elevate your Tic Tac Toe game to the next level today!" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="/static/tic.css" />
+    <link rel="stylesheet" href="/static/pop.css" />
+</head>
+
+<body>
+    <div class="popup-container" id="gridselect">
+        <div class="popup-content">
+            <h2>Grid Selector</h2>
+            <div class="btn-container">
+                <button id="3 X 3">3 X 3</button>
+                <button id="5 X 5">5 X 5</button>
+                <button id="7 X 7">7 X 7</button>
             </div>
         </div>
+    </div>
 
-        <div class="popup-container" id="modeselect">
-            <div class="popup-content">
-                <h2>Select Mode</h2>
-                <div class="input-container" id="twobutton">
-                    <button class="one" id="one">One Player</button>
-                    <button class="one" id="two">Two Player</button>
-                </div>
+    <div class="popup-container" id="modeselect">
+        <div class="popup-content">
+            <h2>Select Mode</h2>
+            <div class="input-container" id="twobutton">
+                <button class="one" id="one">One Player</button>
+                <button class="one" id="two">Two Player</button>
             </div>
         </div>
+    </div>
 
-        <div class="popup-container" id="popupContainer">
-            <div class="popup-content">
-                <h2>Enter Player Names</h2>
-                <div class="input-container">
-                    <input
-                        type="text"
-                        id="player1Name"
-                        placeholder="Player 1 Name"
-                    />
-                    <input
-                        type="text"
-                        id="player2Name"
-                        placeholder="Player 2 Name"
-                    />
-                </div>
-                <div class="btn-container">
-                    <button id="btn-container">Start Game</button>
-                </div>
+    <div class="popup-container" id="popupContainer">
+        <div class="popup-content">
+            <h2>Enter Player Names</h2>
+            <div class="input-container">
+                <input type="text" id="player1Name" placeholder="Player 1 Name" />
+                <input type="text" id="player2Name" placeholder="Player 2 Name" />
+            </div>
+            <div class="btn-container">
+                <button id="btn-container">Start Game</button>
             </div>
         </div>
+    </div>
 
-        <div class="popup-container" class="hover-volume" id="oneNameAsking">
-            <div class="popup-content">
-                <h2>Enter Player Name</h2>
-                <div class="input-container">
-                    <input
-                        type="text"
-                        id="playerName"
-                        placeholder="Player Name"
-                    />
-                </div>
-                <div class="btn-container">
-                    <button id="btn-container-for-computer">Start Game</button>
-                </div>
+    <div class="popup-container" class="hover-volume" id="oneNameAsking">
+        <div class="popup-content">
+            <h2>Enter Player Name</h2>
+            <div class="input-container">
+                <input type="text" id="playerName" placeholder="Player Name" />
+            </div>
+            <div class="btn-container">
+                <button id="btn-container-for-computer">Start Game</button>
             </div>
         </div>
+    </div>
 
-        <nav class="nav" id="nav">
-            <div class="title">Tic Tac Toe</div>
-            <img src="/static/volume-up.png" alt="volume logo" id="volume" />
-        </nav>
-        <div class="gameContainer" id="gameContainer">
-            <div class="container" id="gridContainer"></div>
-            <div class="param">
-                <div class="imgbox">
-                    <img src="/static/excited.gif" alt="Excited Gif" />
-                </div>
-                <div class="gameInfo">
-                    <div class="info" id="info">Turn for X</div>
-                    <div class="scoreboard">
-                        <div class="score ply1">
-                            <p>PLAYER (X)</p>
-                            <p>0</p>
-                        </div>
-                        <div class="score tie">
-                            <p>TIE</p>
-                            <p>0</p>
-                        </div>
-                        <div class="score ply2">
-                            <p>PLAYER (O)</p>
-                            <p>0</p>
-                        </div>
+    <nav class="nav" id="nav">
+        <div class="title">Tic Tac Toe</div>
+        <img src="/static/volume-up.png" alt="volume logo" id="volume" />
+    </nav>
+    <div class="gameContainer" id="gameContainer">
+        <div class="container" id="gridContainer"></div>
+        <div class="param">
+            <div class="imgbox">
+                <img src="/static/excited.gif" alt="Excited Gif" />
+            </div>
+            <div class="gameInfo">
+                <div class="info" id="info">Turn for X</div>
+                <div class="scoreboard">
+                    <div class="score ply1">
+                        <p>PLAYER (X)</p>
+                        <p>0</p>
                     </div>
-                    <div class="btn">
-                        <button class="resetpro" id="reset">Reset</button>
-                        <button class="resetpro" id="clear-score">
-                            Clear Score
-                        </button>
-                        <button class="resetpro" id="rename">
-                            Rename Player
-                        </button>
-                        <button class="resetpro" id="mode">change mode</button>
-                        <button class="resetpro" id="grid">Change grid</button>
+                    <div class="score tie">
+                        <p>TIE</p>
+                        <p>0</p>
+                    </div>
+                    <div class="score ply2">
+                        <p>PLAYER (O)</p>
+                        <p>0</p>
                     </div>
                 </div>
-                <div class="imgbox">
-                    <img src="/static/excited.gif" alt="Excited Gif" />
+                <div class="btn">
+                    <button class="resetpro" id="reset">Reset</button>
+                    <button class="resetpro" id="clear-score">
+                        Clear Score
+                    </button>
+                    <button class="resetpro" id="rename">
+                        Rename Player
+                    </button>
+                    <button class="resetpro" id="mode">change mode</button>
+                    <button class="resetpro" id="grid">Change grid</button>
                 </div>
             </div>
+            <div class="imgbox">
+                <img src="/static/excited.gif" alt="Excited Gif" />
+            </div>
         </div>
-        <script src="/static/script.js"></script>
-    </body>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+
 </html>
