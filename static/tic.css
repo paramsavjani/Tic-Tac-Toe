@@ -7,15 +7,6 @@
 
 
 @media screen and (max-width: 950px) {
-    .container {
-        grid-template-rows: repeat(3, 20vw);
-        grid-template-columns: repeat(3, 20vw);
-    }
-
-    .box {
-        font-size: 15vw;
-        cursor: alias;
-    }
 
     .gameInfo h1 {
         font-size: 1.5rem;
@@ -137,12 +128,10 @@ body {
     background-color: #1f1f1f;
     border: 2px solid #333;
     font-size: 8vw;
-    /*cursor: pointer;*/
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s, transform 0.3s;
-    cursor: pointer;
     position: relative;
 }
 

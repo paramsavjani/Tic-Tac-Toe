@@ -1,0 +1,100 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200vh;
+}
+
+form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="url"],
+input[type="tel"],
+input[type="color"],
+input[type="file"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  font-size: 16px;
+} 
+
+input[type="checkbox"] {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.checkbox-label {
+  display: inline-block;
+  vertical-align: middle;
+  color: #666;
+}
+
+.btn-container {
+  text-align: center;
+}
+
+input[type="submit"],
+input[type="reset"] {
+  background-color: #ff6b6b; /* Red */
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+input[type="reset"] {
+  background-color: #6b66ff; /* Blue */
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #ff8787; /* Lighter red */
+}

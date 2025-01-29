@@ -465,6 +465,7 @@ function startDoubleGame() {
 }
 
 function startComputer() {
+    let isready = true;
     let playerName = null;
     updateNames();
     document.getElementById('info').style.display = 'none';
@@ -574,7 +575,9 @@ function startComputer() {
         saveGameState();
         if (!isMuted) {
             play_gameover();
-        }
+
+
+        } isready = true;
         isGameOver = false;
         imgBox[0].style.display = "none";
         imgBox[1].style.display = "none";
